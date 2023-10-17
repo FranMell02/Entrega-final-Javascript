@@ -87,6 +87,14 @@ li
     height: 100%;
     width: 100%;
     background-color: var(--letter-color);
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+img
+{
+    height: 300px;
+    width: 350px;
 }
 
 /*Footer*/
