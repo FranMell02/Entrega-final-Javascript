@@ -84,16 +84,17 @@ li
 
 .content
 {
-    height: 100%;
+    height: 105%;
     width: 100%;
     background-color: var(--letter-color);
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-row: auto auto;
+    justify-content: center;
 }
 
-/*Footer*/
-
-footer
+.prod
 {
-    height: 20%;
-    background-color: var(--main-bg-color);
+    height: 505px;
+    width: 8s00px;
 }
-
