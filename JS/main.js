@@ -41,8 +41,8 @@ function mostrarCarritoEnModal() {
     <h1 class="modal-header-title">Carrito</h1>
   `;
 
-  modalcontainer.innerHTML = null;
-
+  modalcontainer.innerHTML = "";
+  modalcontainer.style.display = "flex"; // Corrección de "syle" a "style"
   modalcontainer.append(modalheader);
 
   const modalbutton = document.createElement("h1");
@@ -52,7 +52,8 @@ function mostrarCarritoEnModal() {
   modalheader.append(modalbutton);
 
   modalbutton.addEventListener("click", () => {
-    modalcontainer.innerHTML = null; 
+    modalcontainer.innerHTML = ""; 
+    modalcontainer.style.display = "none"; // Corrección de "display" a "style.display"
   });
 
   carrito.forEach((instrumento) => {
