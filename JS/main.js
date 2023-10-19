@@ -42,7 +42,7 @@ function mostrarCarritoEnModal() {
   `;
 
   modalcontainer.innerHTML = "";
-  modalcontainer.style.display = "flex"; // Corrección de "syle" a "style"
+  modalcontainer.style.display = "flex"; 
   modalcontainer.append(modalheader);
 
   const modalbutton = document.createElement("h1");
@@ -53,7 +53,7 @@ function mostrarCarritoEnModal() {
 
   modalbutton.addEventListener("click", () => {
     modalcontainer.innerHTML = ""; 
-    modalcontainer.style.display = "none"; // Corrección de "display" a "style.display"
+    modalcontainer.style.display = "none";
   });
 
   carrito.forEach((instrumento) => {
