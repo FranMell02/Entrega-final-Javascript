@@ -1,4 +1,4 @@
-<html lang="es">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,12 +14,12 @@
     </div>
 
     <ul class="list-header">
-        <a href="Index.html"><li>Home</li></a>
-        <a href="guitar.html"><li>Guitarras</li></a>
-        <a href="bass.html"><li>Bajos</li></a>
-        <a href="amps.html"><li>Amplificadores</li></a>
-        <a href="drums.html"><li>Baterias</li></a>
-    </ul>  
+        <li><a href="Index.html">Home</a></li>
+        <li><a href="guitar.html">Guitarras</a></li>
+        <li><a href="bass.html">Bajos</a></li>
+        <li><a href="amps.html">Amplificadores</a></li>
+        <li class="carrito" id="carrito">🎸</li>
+    </ul>
 
 </header>
 <div class="main">
@@ -27,7 +27,8 @@
 
     </div>
 </div>
-
+<div id="modal-container" class="modal-container"></div>
+<script src="JS/productos.js"></script>
 <script src="JS/main.js"></script>
 </body>
 </html>
