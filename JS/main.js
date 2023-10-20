@@ -5,58 +5,58 @@ const modalcontainer = document.getElementById("modal-container");
 let carrito = [];
 
 function crearTarjeta(instrumento) {
-  let card = document.createElement("div");
-  card.className = "card";
-  card.innerHTML = `
+    let card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
     <img src="${instrumento.imagen}">
     <h3>${instrumento.marca} ${instrumento.modelo}</h3>
     <p class="price">$ ${instrumento.precio}</p>
-  `;
+    `;
 
-  let comprar = document.createElement("button");
-  comprar.innerText = "comprar";
-  card.appendChild(comprar);
+    let comprar = document.createElement("button");
+    comprar.innerText = "comprar";
+    card.appendChild(comprar);
 
-  comprar.addEventListener("click", () => {
+    comprar.addEventListener("click", () => {
     agregarAlCarrito(instrumento);
-  });
+    });
 
-  return card;
+    return card;
 }
 
 function agregarAlCarrito(instrumento) {
-  carrito.push({
+    carrito.push({
     marca: instrumento.marca,
     modelo: instrumento.modelo,
     precio: instrumento.precio,
     imagen: instrumento.imagen,
-  });
-  console.log(carrito);
+    });
+    console.log(carrito);
 }
 
 function mostrarCarritoEnModal() {
-  const modalheader = document.createElement("div");
-  modalheader.className = "modal-header";
-  modalheader.innerHTML = `
+    const modalheader = document.createElement("div");
+    modalheader.className = "modal-header";
+    modalheader.innerHTML = `
     <h1 class="modal-header-title">Carrito</h1>
-  `;
+    `;
 
-  modalcontainer.innerHTML = "";
-  modalcontainer.style.display = "flex"; 
-  modalcontainer.append(modalheader);
+    modalcontainer.innerHTML = "";
+    modalcontainer.style.display = "flex"; 
+    modalcontainer.append(modalheader);
 
-  const modalbutton = document.createElement("h1");
-  modalbutton.innerText = "X";
-  modalbutton.className = "modal-header-buttons";
+    const modalbutton = document.createElement("h1");
+    modalbutton.innerText = "X";
+    modalbutton.className = "modal-header-buttons";
 
-  modalheader.append(modalbutton);
+    modalheader.append(modalbutton);
 
-  modalbutton.addEventListener("click", () => {
+    modalbutton.addEventListener("click", () => {
     modalcontainer.innerHTML = ""; 
     modalcontainer.style.display = "none";
-  });
+    });
 
-  carrito.forEach((instrumento) => {
+    carrito.forEach((instrumento) => {
     let carritocontent = document.createElement("div");
     carritocontent.className = "modal-content";
     carritocontent.innerHTML = `
@@ -65,17 +65,34 @@ function mostrarCarritoEnModal() {
         <p class="price">$ ${instrumento.precio}</p>
     `;
     modalcontainer.append(carritocontent);
-  });
+    });
 
-  const total = carrito.reduce((acc, el) => acc + el.precio, 0);
-  const compratotal = document.createElement("div");
-  compratotal.className = "total-content";
-  compratotal.innerHTML = `Total a pagar: $ ${total.toLocaleString()}`;
-  modalcontainer.append(compratotal);
+    const total = carrito.reduce((acc, el) => acc + el.precio, 0);
+    const compratotal = document.createElement("div");
+    compratotal.className = "total-content";
+    compratotal.innerHTML = `Total a pagar: $ ${total.toLocaleString()}`;
+    modalcontainer.append(compratotal);
 }
 
 instrumentos.instrumentos.forEach((instrumento) => {
-  content.appendChild(crearTarjeta(instrumento));
+    content.appendChild(crearTarjeta(instrumento));
 });
 
 vercarrito.addEventListener("click", mostrarCarritoEnModal);
+
+const consumirJSON = () => {
+    fetch('JS/productos.json')
+    .then(respuesta => respuesta.json())
+    .then(data => {
+        let contenidoHTML = "";
+
+        data.forEach(instrumento => {
+            contenidoHTML += `<img src="${instrumento.imagen}">
+            <h3>${instrumento.marca} ${instrumento.modelo}</h3>
+            <p class="price">$ ${instrumento.precio}</p>`;
+        });
+
+    });
+}
+
+document.getElementById("resultado").innerHTML = contenidoHTML;
