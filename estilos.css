@@ -91,12 +91,13 @@ li
     grid-template-columns: auto auto;
     grid-row: auto auto;
     justify-content: center;
+    gap: 0;
 }
 
 .prod
 {
-    height: 505px;
-    width: 870px;
+    height: 510px;
+    width: 776px;
 }
 
 /*tarjetas*/
@@ -177,7 +178,6 @@ li
 {
     display: none;
 }
- 
 .modal-header
 {
     display: flex;

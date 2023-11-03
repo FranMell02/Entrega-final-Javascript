@@ -1,9 +1,11 @@
+/* Constantes */
 const content = document.getElementById("content");
 const vercarrito = document.getElementById("carrito");
 const modalcontainer = document.getElementById("modal-container");
 
 let carrito = [];
 
+/* Crear tarjetas de productos */
 function crearTarjeta(instrumento) {
     let card = document.createElement("div");
     card.className = "card";
@@ -24,6 +26,7 @@ function crearTarjeta(instrumento) {
     return card;
 }
 
+/* Funciones del carrito */
 function agregarAlCarrito(instrumento) {
     carrito.push({
     marca: instrumento.marca,
@@ -34,6 +37,7 @@ function agregarAlCarrito(instrumento) {
     console.log(carrito);
 }
 
+/* Mostrar carrito */
 function mostrarCarritoEnModal() {
     const modalheader = document.createElement("div");
     modalheader.className = "modal-header";
@@ -74,13 +78,13 @@ function mostrarCarritoEnModal() {
     modalcontainer.append(compratotal);
 }
 
+vercarrito.addEventListener("click", mostrarCarritoEnModal);
+/* vercarrito.addEventListener("click", pintarcarrito); */
+
 instrumentos.instrumentos.forEach((instrumento) => {
     content.appendChild(crearTarjeta(instrumento));
 });
-
-vercarrito.addEventListener("click", mostrarCarritoEnModal);
-
-const consumirJSON = () => {
+/* const consumirJSON = () => {
     fetch('JS/productos.json')
     .then(respuesta => respuesta.json())
     .then(data => {
@@ -93,6 +97,6 @@ const consumirJSON = () => {
         });
 
     });
-}
+} */
 
 document.getElementById("resultado").innerHTML = contenidoHTML;
