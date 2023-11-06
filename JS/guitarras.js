@@ -1,7 +1,9 @@
 /* Constantes */
-const content = document.getElementById("content");
-const vercarrito = document.getElementById("carrito");
-const modalcontainer = document.getElementById("modal-container");
+const shopContent = document.getElementById("shopContent");
+const verCarrito = document.getElementById("verCarrito");
+const modalContainer = document.getElementById("modal-container");
+const showAlert = document.getElementById("showAlert");
+const cantidadCarrito = document.getElementById("cantidadCarrito");
 
 let carrito = [];
 
@@ -10,30 +12,16 @@ let carrito = [];
 const getproducts = async () => {
     const response = await fetch('JS/guitarras.json');
     const data = await response.json();
-    data.instrumentos.forEach((instrumento) => {
-        content.appendChild(crearTarjeta(instrumento));
-    });
 
-    function crearTarjeta(instrumento) {
-        let card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `
-            <img src="${instrumento.imagen}">
-            <h3>${instrumento.marca} ${instrumento.modelo}</h3>
-            <p class="price">$${instrumento.precio.toLocaleString()}</p>
-        `;
+    console.log(data)
     
-        let comprar = document.createElement("button");
-        comprar.innerText = "Comprar";
-        card.appendChild(comprar);
-    
-        comprar.addEventListener("click", () => {
-            agregarAlCarrito(instrumento);
-        });
-    
-        return card;
-    } 
-}
+    data.forEach((guitarras) => {
+        const card = crearTarjeta(guitarras);
+        shopContent.appendChild(card);
+    });
+};
+
+getproducts();
 
 function crearTarjeta(instrumento) {
     let card = document.createElement("div");
@@ -56,61 +44,102 @@ function crearTarjeta(instrumento) {
 }
 
 /* Carrito */
-function agregarAlCarrito(instrumento) {
-    carrito.push({
-        marca: instrumento.marca,
-        modelo: instrumento.modelo,
-        precio: instrumento.precio,
-        imagen: instrumento.imagen,
-    });
-    console.log(carrito);
-}
 
-/* Mostrar carrito en pantalla */
-function mostrarCarritoEnModal() {
-    const modalheader = document.createElement("div");
-    modalheader.className = "modal-header";
-    modalheader.innerHTML = `
-        <h1 class="modal-header-title">Carrito</h1>
-    `;
-
-    modalcontainer.innerHTML = "";
-    modalcontainer.style.display = "flex";
-    modalcontainer.append(modalheader);
-
+const pintarCarrito = () => {
+    modalContainer.innerHTML = "";
+    modalContainer.style.display = "flex";
+    const modalHeader = document.createElement("div");
+    modalHeader.className = "modal-header";
+    modalHeader.innerHTML = `
+        <h1 class="modal-header-title">Carrito.</h1>
+      `;
+    modalContainer.append(modalHeader);
+  
     const modalbutton = document.createElement("h1");
-    modalbutton.innerText = "X";
-    modalbutton.className = "modal-header-buttons";
-
-    modalheader.append(modalbutton);
-
+    modalbutton.innerText = "x";
+    modalbutton.className = "modal-header-button";
+  
     modalbutton.addEventListener("click", () => {
-        modalcontainer.innerHTML = "";
-        modalcontainer.style.display = "none";
+      modalContainer.style.display = "none";
     });
-
-    /* Mostrar los productos en el carrito */
-    carrito.forEach((instrumento) => {
-        let carritocontent = document.createElement("div");
-        carritocontent.className = "modal-content";
-        carritocontent.innerHTML = `
-            <img src="${instrumento.imagen}">
-            <h3>${instrumento.marca} ${instrumento.modelo}</h3>
-            <p class="price">$${instrumento.precio.toLocaleString()}</p>
+  
+    modalHeader.append(modalbutton);
+  
+    carrito.forEach((product) => {
+      let carritoContent = document.createElement("div");
+      carritoContent.className = "modal-content";
+      carritoContent.innerHTML = `
+          <img src="${product.img}">
+          <h3>${product.nombre}</h3>
+          <p>${product.precio} $</p>
+          <span class="restar"> - </span>
+          <p>${product.cantidad}</p>
+          <span class="sumar"> + </span>
+          <p>Total: ${product.cantidad * product.precio} $</p>
+          <span class="delete-product"> ❌ </span>
         `;
-        modalcontainer.append(carritocontent);
+  
+      modalContainer.append(carritoContent);
+  
+      let restar = carritoContent.querySelector(".restar");
+  
+      restar.addEventListener("click", () => {
+        if (product.cantidad !== 1) {
+          product.cantidad--;
+        }
+        saveLocal();
+        pintarCarrito();
+      });
+  
+      let sumar = carritoContent.querySelector(".sumar");
+      sumar.addEventListener("click", () => {
+        product.cantidad++;
+        saveLocal();
+        pintarCarrito();
+      });
+  
+      let eliminar = carritoContent.querySelector(".delete-product");
+  
+      eliminar.addEventListener("click", () => {
+        eliminarProducto(product.id);
+      });
     });
-
-    const total = carrito.reduce((acc, el) => acc + el.precio, 0);
-    const compratotal = document.createElement("div");
-    compratotal.className = "total-content";
-    compratotal.innerHTML = `Total a pagar: $${total.toLocaleString()}`;
-    modalcontainer.append(compratotal);
-}
-
-vercarrito.addEventListener("click", mostrarCarritoEnModal);
-
-getproducts();
+  
+    const total = carrito.reduce((acc, el) => acc + el.precio * el.cantidad, 0);
+  
+    const totalBuying = document.createElement("div");
+    totalBuying.className = "total-content";
+    totalBuying.innerHTML = `Total a pagar: ${total} $`;
+    modalContainer.append(totalBuying);
+  };
+  
+  verCarrito.addEventListener("click", pintarCarrito);
+  
+  const eliminarProducto = (id) => {
+    const foundId = carrito.find((element) => element.id === id);
+  
+    console.log(foundId);
+  
+    carrito = carrito.filter((carritoId) => {
+      return carritoId !== foundId;
+    });
+  
+    carritoCounter();
+    saveLocal();
+    pintarCarrito();
+  };
+  
+  const carritoCounter = () => {
+    cantidadCarrito.style.display = "block";
+  
+    const carritoLength = carrito.length;
+  
+    localStorage.setItem("carritoLength", JSON.stringify(carritoLength));
+  
+    cantidadCarrito.innerText = JSON.parse(localStorage.getItem("carritoLength"));
+  };
+  
+  carritoCounter();
 
 
 

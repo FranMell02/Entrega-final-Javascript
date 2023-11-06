@@ -82,15 +82,13 @@ li
     justify-content: center;
 }
 
-.content
+.shopContent
 {
     height: 105%;
     width: 100%;
     background-color: var(--letter-color);
     display: grid;
-    grid-template-columns: auto auto;
-    grid-row: auto auto;
-    justify-content: center;
+    grid-row: auto;
 }
 
 .prod
