@@ -32,12 +32,18 @@ function crearTarjeta(instrumento) {
         <p class="price">$${instrumento.precio.toLocaleString()}</p>
     `;
 
+/* Agruegar productos al carrito */
+
     let comprar = document.createElement("button");
     comprar.innerText = "Comprar";
     card.appendChild(comprar);
 
     comprar.addEventListener("click", () => {
-        agregarAlCarrito(instrumento);
+        carrito.push({
+          img: instrumento.imagen,
+          nombre: instrumento.nombre,
+          precio: instrumento.precio,
+        });
     });
 
     return card;

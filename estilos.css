@@ -82,14 +82,14 @@ li
     justify-content: center;
 }
 
-.content
+.shopContent
 {
     height: 105%;
     width: 100%;
     background-color: var(--letter-color);
     display: grid;
-    grid-template-columns: auto auto;
-    grid-row: auto auto;
+    grid-template-columns: auto auto auto auto;
+    grid-row: auto auto ;
     justify-content: center;
     gap: 0;
 }
@@ -102,7 +102,7 @@ li
 
 /*tarjetas*/
 
-.content
+.Content
 {
     display: flex;
     justify-content: space-around;
